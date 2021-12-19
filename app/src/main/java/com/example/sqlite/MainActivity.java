@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                     DBHelper dbHelper = new DBHelper(MainActivity.this);
-                    dbHelper.updateStudent(studentModel);
+                    if(dbHelper.updateStudent(studentModel)){
+                        seeAllRecords();
+                    }
                 }
             }
         });
@@ -76,13 +78,17 @@ public class MainActivity extends AppCompatActivity {
         buttonViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DBHelper dbHelper = new DBHelper(MainActivity.this);
-                List<StudentModel> list = dbHelper.getAllStudents();
-                Adapter adapter = new Adapter(MainActivity.this, list);
-                linearLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
-                recyclerViewStudent.setLayoutManager(linearLayoutManager);
-                recyclerViewStudent.setAdapter(adapter);
+                seeAllRecords();
             }
         });
+    }
+
+    public void seeAllRecords(){
+        DBHelper dbHelper = new DBHelper(MainActivity.this);
+        List<StudentModel> list = dbHelper.getAllStudents();
+        Adapter adapter = new Adapter(MainActivity.this, list);
+        linearLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewStudent.setLayoutManager(linearLayoutManager);
+        recyclerViewStudent.setAdapter(adapter);
     }
 }
