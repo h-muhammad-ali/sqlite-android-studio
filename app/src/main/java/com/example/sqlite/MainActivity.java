@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Switch switchIsActive;
     RecyclerView recyclerViewStudent;
     LinearLayoutManager linearLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     DBHelper dbHelper = new DBHelper(MainActivity.this);
                     dbHelper.addStudent(studentModel);
-                }
-                else {
+                } else {
                     try {
                         studentModel = new StudentModel(Integer.valueOf(id.getText().toString()), editName.getText().toString(), Integer.parseInt(editAge.getText().toString()), switchIsActive.isChecked());
                         Toast.makeText(MainActivity.this, studentModel.toString(), Toast.LENGTH_SHORT).show();
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                     DBHelper dbHelper = new DBHelper(MainActivity.this);
-                    if(dbHelper.updateStudent(studentModel)){
+                    if (dbHelper.updateStudent(studentModel)) {
                         seeAllRecords();
                     }
                 }
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void seeAllRecords(){
+    public void seeAllRecords() {
         DBHelper dbHelper = new DBHelper(MainActivity.this);
         List<StudentModel> list = dbHelper.getAllStudents();
         Adapter adapter = new Adapter(MainActivity.this, list);

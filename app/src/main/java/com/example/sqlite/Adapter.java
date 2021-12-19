@@ -19,7 +19,7 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.Viewholder>{
+public class Adapter extends RecyclerView.Adapter<Adapter.Viewholder> {
     private Context context;
     private List<StudentModel> list;
 
@@ -40,7 +40,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Viewholder>{
         holder.id.setText(String.valueOf(list.get(position).getId()));
         holder.name.setText(list.get(position).getName());
         holder.age.setText(String.valueOf(list.get(position).getAge()));
-        holder.activity.setText(list.get(position).isActive()?"True":"False");
+        holder.activity.setText(list.get(position).isActive() ? "True" : "False");
     }
 
     @Override
@@ -55,6 +55,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Viewholder>{
         private TextView activity;
         private Button update;
         private Button delete;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.id);
@@ -66,11 +67,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Viewholder>{
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TextView idMain = (TextView)((Activity)context).findViewById(R.id.idMain);
-                    EditText editName = (EditText) ((Activity)context).findViewById(R.id.editTextName);
-                    EditText editAge = (EditText) ((Activity)context).findViewById(R.id.editTextAge);
-                    Switch switchIsActive = (Switch) ((Activity)context).findViewById(R.id.switchStudent);
-                    Button updateMain = (Button)((Activity)context).findViewById(R.id.buttonAdd);
+                    TextView idMain = (TextView) ((Activity) context).findViewById(R.id.idMain);
+                    EditText editName = (EditText) ((Activity) context).findViewById(R.id.editTextName);
+                    EditText editAge = (EditText) ((Activity) context).findViewById(R.id.editTextAge);
+                    Switch switchIsActive = (Switch) ((Activity) context).findViewById(R.id.switchStudent);
+                    Button updateMain = (Button) ((Activity) context).findViewById(R.id.buttonAdd);
                     updateMain.setText("Update");
                     idMain.setText(id.getText());
                     editName.setText(name.getText());
@@ -83,7 +84,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Viewholder>{
                 @Override
                 public void onClick(View view) {
                     DBHelper dbHelper = new DBHelper(context);
-                    dbHelper.deleteStudent(Integer.valueOf(id.getText().toString()));
+                    if (dbHelper.deleteStudent(Integer.valueOf(id.getText().toString()))) {
+                        ((MainActivity) context).seeAllRecords();
+                    }
 
                 }
             });
